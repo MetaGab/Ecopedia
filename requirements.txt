@@ -1,0 +1,5 @@
+Django==2.0.1
+gunicorn==19.7.1
+reportlab
+pytz==2017.3
+whitenoise==3.3.1

@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html>
+<head>
+ <meta charset="utf-8">
+    <title>Animales</title>
+ <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet" type="text/css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<style>
+body {
+
+
+    font-family: "Montserrat", sans-serif;
+}
+
+.sidenav {
+
+    height: 100%;
+    width: 200px;
+    margin-top: 50px;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    background-color: #567E3A;
+    overflow: auto;
+    padding-top: 20px;
+}
+
+.sidenav a {
+    padding: 6px 6px 12px 32px;
+    text-decoration: none;
+    font-size: 20px;
+    color: #d5d5d5;
+    display: block;
+}
+
+.sidenav a:hover {
+    color: #2b384c;
+}
+.tab-content h1{
+		text-align: left;
+		font-size: 50px;
+
+}	
+
+.tab-content p{
+		text-align: justify;
+		margin-right: 45%;
+}	
+.tab-content {
+  margin-top: 60px;
+	text-align: justify;
+    margin-left: 230px; 
+}    
+.picAnimal{
+	  display: block;
+    margin-left: 500px;
+    margin-right: auto;
+    margin-top: 1px;
+    width: 50%;
+}
+
+.fondoTips {
+  margin-top: 5%;
+	 text-align: left; 
+}
+
+.mapaAnimal{
+  display: block;
+    margin-left: 500px;
+    margin-right: auto;
+    margin-top: 1px;
+    width: 50%;
+}
+  
+  .navbar {
+      font-family: Montserrat, sans-serif;
+      
+      margin-bottom: 0;
+      background-color: #567E3A;
+      border: 0;
+      font-size: 11px !important;
+      letter-spacing: 4px;
+      opacity: 0.9;
+  }
+  .navbar li a, .navbar .navbar-brand { 
+      color: #d5d5d5 !important;
+  }
+  .navbar-nav li a:hover {
+      color: #fff !important;
+  }
+  .navbar-nav li.active a {
+      color: #fff !important;
+      background-color: #29292c !important;
+  }
+  .navbar-default .navbar-toggle {
+      border-color: transparent;
+  }
+
+
+@media screen and (max-height: 450px) {
+  .sidenav {padding-top: 15px;}
+  .sidenav a {font-size: 18px;}
+}
+</style>
+</head>
+<body>
+
+
+<nav class="navbar navbar-default navbar-fixed-top">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>                        
+      </button>
+      <a class="navbar-brand" href="/" >ECOPEDIA</a>
+    </div>
+    <div class="collapse navbar-collapse" id="myNavbar">
+      <ul class="nav navbar-nav navbar-right">
+          <li><a href="/quiz/">TOMAR EXAMEN</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+<div class="sidenav">
+
+  	<a class="tablinks" onclick="openAnimal(event,'Animales')" id="defaultOpen" >ANIMALES</a>
+    {% for animal in animals %}
+    <a class="tablinks" onclick="openAnimal(event,'{{animal.slug}}')"  >{{animal.name}}</a>
+    {% endfor %}
+</div>
+
+<div class="tab-content">
+
+ <div id="Animales" class="tabcontent">
+  <h1>ANIMALES</h1>
+  <p>Selecciona alguno de los animales para obtener información</p>
+
+</div>
+{% for animal in animals %}
+<div id="{{animal.slug}}" class="tabcontent">
+  <h1>{{animal.name}}</h1>
+  <div class="picAnimal">
+    <img  align="right" src="{{animal.image_link}}" width="400">
+  </div>
+
+  <p>{{animal.description}}</p> 
+
+  <div class="fondoTips">
+  	<h2>TIPS</h2>
+    <div class="mapaAnimal">
+    <img align="right"src= "{{animal.map_link}}" width="400">
+  </div>
+      {% for tip in animal.tip_set.all %}
+      <ul >
+        <li >{{tip.description}}</li>
+      </ul>
+      {% endfor %}
+  </div>
+</div>
+{% endfor %}
+</div>
+
+<script>
+function openAnimal(evt, animalName) {
+    var i, tabcontent, tablinks;
+    tabcontent = document.getElementsByClassName("tabcontent");
+    for (i = 0; i < tabcontent.length; i++) {
+        tabcontent[i].style.display = "none";
+    }
+    tablinks = document.getElementsByClassName("tablinks");
+    for (i = 0; i < tablinks.length; i++) {
+        tablinks[i].className = tablinks[i].className.replace(" active", "");
+    }
+    document.getElementById(animalName).style.display = "block";
+    evt.currentTarget.className += " active";
+}
+
+// Get the element with id="defaultOpen" and click on it
+document.getElementById("defaultOpen").click();
+</script>
+
+
+
+
+     
+</body>
+</html> 
+
